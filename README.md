@@ -168,20 +168,20 @@ else:
 
    - reduce规约
 
-   ​        它相当于在收集的过程中不断地进行两元运算,最终在接收方那里只有一个值，而不是一个列表.
+     它相当于在收集的过程中不断地进行两元运算,最终在接收方那里只有一个值，而不是一个列表.
 
-```python
-n = comm_rank  
-data = comm.reduce(n, root = 0, op = MPI.SUM)  
-```
+     ```python
+     n = comm_rank  
+     data = comm.reduce(n, root = 0, op = MPI.SUM)  
+     ```
 
-​     	       这里只是简单地得到rank的和，更常用的场景是，每个进程进行一定的计算，将结果操作在一起(可能求和，求最大值，求最小值等)。这样就可以把一个进程串行操作花费的时间 平摊 给若干个进程，降低运行时间。最后只有 root 进程会得到运算的最终结果
+     这里只是简单地得到rank的和，更常用的场景是，每个进程进行一定的计算，将结果操作在一起(可能求和，求最大值，求最小值等)。这样就可以把一个进程串行操作花费的时间 平摊 给若干个进程，降低运行时间。最后只有 root 进程会得到运算的最终结果
 
-- AllGather
+   - AllGather
 
-​      	其实 AllGather = gather + bcast，
+   ​      	其实 AllGather = gather + bcast，
 
-​    	gather中只有根进程会得到收集到的信息, 组成一个列表，而allgather则是所有进程都会得到这个列表，就相当于收集后再广播一次.
+   ​    	gather中只有根进程会得到收集到的信息, 组成一个列表，而allgather则是所有进程都会得到这个列表，就相当于收集后再广播一次.
 
 ```python
 recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
