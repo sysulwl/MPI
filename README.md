@@ -88,41 +88,40 @@ else:
         comm.Recv([buf,type], source) 
       ```
 
-  		这里data是一个 numpy.array，包含了需要传输的数据，type则是这个数据的类型，典型值有MPI.INT，dest分别是源进程rank和目的进程rank。
+       这里data是一个 numpy.array，包含了需要传输的数据，type则是这个数据的类型，典型值有MPI.INT，dest分别是源进程rank和目的进程rank。
 
-  ![avatar](source/MPI_BUFFER_SEND.jpg)
+        ![avatar](source/MPI_BUFFER_SEND.jpg)
 
-​	 - 非阻塞有缓冲版本
+    - 非阻塞有缓冲版本
 
-点对点通信里的recv函数是一个阻塞函数,也就是接收方要等发送方发送了信息,函数才能返回。 那么对应的,非阻塞型函数就是,不管发送方是否发送了信息,函数都马上返回,返回一个request对象。我们可以通过request对象来测试发送方是否发送了信息。
+      点对点通信里的recv函数是一个阻塞函数,也就是接收方要等发送方发送了信息,函数才能返回。 那么对应的,非阻塞型函数就是,不管发送方是否发送了信息,函数都马上返回,返回一个request对象。我们可以通过request对象来测试发送方是否发送了信息。
 
-```python
-comm.Isend([data, MPI.INT], dest)    
-comm.Irecv([data, MPI.INT], source)  
-```
+      ```python
+      comm.Isend([data, MPI.INT], dest)    
+      comm.Irecv([data, MPI.INT], source)  
+      ```
 
-参数都是和Send和Recv的参数一致
-![avatar](source/MPI_ASY_SEND.jpg)
-执行完上述函数后，调用request.Test()来得知 信息是否发送(接收)完毕
+      ​	参数都是和Send和Recv的参数一致
+      ![avatar](source/MPI_ASY_SEND.jpg)
+      执行完上述函数后，调用request.Test()来得知 信息是否发送(接收)完毕
 
-- probe
+    - probe
 
-  probe函数是用来探查当前进程是否收到消息的
+      probe函数是用来探查当前进程是否收到消息的
 
-  阻塞版本的probe必须在收到消息后才返回,返回一个true.而非阻塞版本的iprobe则是马上返回一个true或者false,true表示有消息,false则是没有消息.
+      阻塞版本的probe必须在收到消息后才返回,返回一个true.而非阻塞版本的iprobe则是马上返回一个true或者false,true表示有消息,false则是没有消息.
 
-  ```python
-  comm.iprobe(source, tag, status)
-  ```
+      ```python
+      comm.iprobe(source, tag, status)
+      ```
 
-  第一个参数是source,用来限制发送方,默认是all.
+      第一个参数是source,用来限制发送方,默认是all.
 
-  第二个参数是tag,用来限制tag.其实在之前的许多函数里都有tag参数,它是int类型,用来给消息打标签,来区分不同的消息.默认也是all.
+      第二个参数是tag,用来限制tag.其实在之前的许多函数里都有tag参数,它是int类型,用来给消息打标签,来区分不同的消息.默认也是all.
 
-  第三个参数是status,它是一个output参数,就是说你给它传递一个空的status对象,函数返回后这个status对象会存放一些返回信息,
+      第三个参数是status,它是一个output参数,就是说你给它传递一个空的status对象,函数返回后这个status对象会存放一些返回信息,
 
-  probe函数只是针对点对点通信的探查
-
+      probe函数只是针对点对点通信的探查
 
 3. 集体通信:
 
