@@ -197,9 +197,9 @@ else:
 
       其中 CalData 是待计算数据，op是对应操作，比如 MPI.SUM
 
-  - scan
+   - scan
 
-     ​	它和AllReduce类似，会把前i个收集的数据reduce成一个数据,返回发送给第i个进程。
+     它和AllReduce类似，会把前i个收集的数据reduce成一个数据,返回发送给第i个进程。
 
      也就是说，scan其实是有 n （n = comm.Get_size()）次 AllReduce 操作，每次 AllReduce 对应的是前 i 个进程。
 
@@ -207,21 +207,21 @@ else:
      data = comm.scan(CalData, op)
      ```
 
-     ​	其中CalData是待计算数据，op是对应操作，比如 MPI.SUM
+     其中CalData是待计算数据，op是对应操作，比如 MPI.SUM
 
-  - barrier
+   - barrier
 
-    ​	barrier 是一种全局同步，当一个进程调用 barrier 的时候,它会被阻塞。当所有进程都调用了 barrier 之后, barrier 会同时解除所有进程的阻塞。相当于是运行比较快的进程等待其他进程运行到相同的执行代码处，再一起运行。这就是全部进程进行同步
+     barrier 是一种全局同步，当一个进程调用 barrier 的时候,它会被阻塞。当所有进程都调用了 barrier 之后, barrier 会同时解除所有进程的阻塞。相当于是运行比较快的进程等待其他进程运行到相同的执行代码处，再一起运行。这就是全部进程进行同步
 
-       	接口 :
+     接口 :
 
-    ```python
-    comm.barrier()
-    ```
+     ```python
+     comm.barrier()
+     ```
 
-       	无返回值
+     无返回值
 
-    ​
+​
 
 4. 通信组操作
 
