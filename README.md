@@ -156,15 +156,15 @@ else:
    - gather聚集
 
      ​	![avatar](source/MPI_GATHER.JPG)
-      	gather 函数基本上是 scatter 的反操作，即收集所有进程发送向root进程的数据。 
+     gather 函数基本上是 scatter 的反操作，即收集所有进程发送向root进程的数据。 
 
-        	mpi4py 实现的 gather 函数如下：
+     mpi4py 实现的 gather 函数如下：
 
      ```python
      recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
      ```
 
-        	sendbuf 是要发送的数据， rank_of_root_process 代表要接收数据进程。
+     sendbuf 是要发送的数据， rank_of_root_process 代表要接收数据进程。
 
   - reduce规约
 
