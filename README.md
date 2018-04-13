@@ -179,13 +179,14 @@ else:
 
    - AllGather
 
-   ​      	其实 AllGather = gather + bcast，
+     其实 AllGather = gather + bcast，
 
-   ​    	gather中只有根进程会得到收集到的信息, 组成一个列表，而allgather则是所有进程都会得到这个列表，就相当于收集后再广播一次.
+     gather中只有根进程会得到收集到的信息, 组成一个列表，而allgather则是所有进程都会得到这个列表，就相当于收集后再广播一次.
 
-```python
-recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
-```
+     ```python
+     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
+     ```
+
   - AllReduce
 
     ​	同上， AllReduce = reduce + bcast, 将根进程得到的最终结果 广播 给每一个进程
