@@ -68,20 +68,21 @@ else:
       Comm.Recv(process_source)
       ```
 
-    接收来自源进程的数据，也是通过在通信组中的rank来区分的
+    ​	接收来自源进程的数据，也是通过在通信组中的rank来区分的
 
 
-       注意： comm.send() 和 comm.recv() 函数都是阻塞的函数。他们会一直阻塞调用者，直到数据使用完成。
+     	注意： comm.send() 和 comm.recv() 函数都是阻塞的函数。他们会一直阻塞调用者，直到数据使用完成。
 
     - 同步模式	
 
-      在同步模式中，只有函数真正的结束发送/接收任务之后才会返回
+       在同步模式中，只有函数真正的结束发送/接收任务之后才会返回
 
-      ![avatar](source/MPI_SYN_SEND.jpg)
+       ![avatar](source/MPI_SYN_SEND.jpg)
 
     - 阻塞有缓冲版本
 
       通过返回值接收数据会多了一次数据拷贝的操作，效率较低。MPI中提供了带buffer参数的点对点通信函数:
+
 
       ```python
       comm.Send([data, type], dest)  
@@ -123,7 +124,6 @@ else:
     
       probe函数只是针对点对点通信的探查
     
-      ​
 
 
 3. 集体通信:
