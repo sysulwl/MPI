@@ -73,11 +73,11 @@ else:
 
        ​
 
-       - 同步模式
+    - 同步模式
 
-         在同步模式中，只有函数真正的结束发送/接收任务之后才会返回
+       在同步模式中，只有函数真正的结束发送/接收任务之后才会返回
 
-         ​ ![avatar](source/MPI_SYN_SEND.jpg)
+       ​ ![avatar](source/MPI_SYN_SEND.jpg)
 
       ​
 
