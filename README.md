@@ -55,23 +55,17 @@ else:
 
     - 标准版本(阻塞 无缓冲)
 
-       ​	Python的 mpi4py库 通过下面两个函数提供了点对点通讯功能:     
+       ​	Python的 mpi4py 库通过下面两个函数提供了点对点通讯功能:
 
-       ```python
-       Comm.Send(data, process_destination)
-       ```
+       `Comm.Send(data, process_destination)`
 
-         	通过它在交流组中的排名来区分发送给不同进程的数据
+       ​	通过它在交流组中的排名来区分发送给不同进程的数据
 
-       ```python
-         Comm.Recv(process_source)
-       ```
+       `Comm.Recv(process_source)`
 
-       ​	接收来自源进程的数据，也是通过在通信组中的rank来区分的
+       ​	接受来自源进程的数据，也是通过在通信组中的rank来区分的。
 
-        	注意： comm.send() 和 comm.recv() 函数都是阻塞的函数。他们会一直阻塞调用者，直到数据使用完成。
-
-       ​
+       ​	注意： comm.send() 和 comm.recv() 函数都是阻塞的函数。它们会一直阻塞调用者，直到数据使用完成。
 
     - 同步模式
 
