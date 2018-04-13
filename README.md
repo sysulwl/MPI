@@ -187,15 +187,15 @@ else:
      recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
      ```
 
-  - AllReduce
+   - AllReduce
 
-    ​	同上， AllReduce = reduce + bcast, 将根进程得到的最终结果 广播 给每一个进程
+     同上， AllReduce = reduce + bcast, 将根进程得到的最终结果 广播 给每一个进程
 
-       ```python
-    recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
-       ```
+     ```python
+     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
+     ```
 
-     	  其中 CalData 是待计算数据，op是对应操作，比如 MPI.SUM
+      其中 CalData 是待计算数据，op是对应操作，比如 MPI.SUM
 
   - scan
 
