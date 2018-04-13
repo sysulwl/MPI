@@ -73,11 +73,11 @@ else:
 
        ​
 
-    - 同步模式	
+       - 同步模式
 
-       	在同步模式中，只有函数真正的结束发送/接收任务之后才会返回
+         在同步模式中，只有函数真正的结束发送/接收任务之后才会返回
 
-      ​	 ![avatar](source/MPI_SYN_SEND.jpg)
+         ​ ![avatar](source/MPI_SYN_SEND.jpg)
 
       ​
 
@@ -155,7 +155,7 @@ else:
     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
        ```
 
-       	注意， comm.scatter 有一个限制，发送数据的列表中元素的个数必须和接收的进程数相等，否则会报错。
+       注意， comm.scatter 有一个限制，发送数据的列表中元素的个数必须和接收的进程数相等，否则会报错。
 
   - gather聚集
 
@@ -172,20 +172,20 @@ else:
 
   - reduce规约
 
-    它相当于在收集的过程中不断地进行两元运算,最终在接收方那里只有一个值，而不是一个列表.
+    ​    它相当于在收集的过程中不断地进行两元运算,最终在接收方那里只有一个值，而不是一个列表.
 
     ```python
     n = comm_rank  
     data = comm.reduce(n, root = 0, op = MPI.SUM)  
     ```
 
-       这里只是简单地得到rank的和，更常用的场景是，每个进程进行一定的计算，将结果操作在一起(可能求和，求最大值，求最小值等)。这样就可以把一个进程串行操作花费的时间 平摊 给若干个进程，降低运行时间。最后只有 root 进程会得到运算的最终结果
+    ​     这里只是简单地得到rank的和，更常用的场景是，每个进程进行一定的计算，将结果操作在一起(可能求和，求最大值，求最小值等)。这样就可以把一个进程串行操作花费的时间 平摊 给若干个进程，降低运行时间。最后只有 root 进程会得到运算的最终结果
 
   - AllGather
 
-     其实 AllGather = gather + bcast，
+     ​      	其实 AllGather = gather + bcast，
 
-       gather中只有根进程会得到收集到的信息, 组成一个列表，而allgather则是所有进程都会得到这个列表，就相当于收集后再广播一次.
+     ​    	gather中只有根进程会得到收集到的信息, 组成一个列表，而allgather则是所有进程都会得到这个列表，就相当于收集后再广播一次.
 
      ```python
      recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
@@ -194,17 +194,17 @@ else:
 
   - AllReduce
 
-    同上， AllReduce = reduce + bcast, 将根进程得到的最终结果 广播 给每一个进程
+    ​	同上， AllReduce = reduce + bcast, 将根进程得到的最终结果 广播 给每一个进程
 
        ```python
     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
        ```
 
-       其中 CalData 是待计算数据，op是对应操作，比如 MPI.SUM
+     	  其中 CalData 是待计算数据，op是对应操作，比如 MPI.SUM
 
   - scan
 
-     它和AllReduce类似，会把前i个收集的数据reduce成一个数据,返回发送给第i个进程。
+     ​	它和AllReduce类似，会把前i个收集的数据reduce成一个数据,返回发送给第i个进程。
 
      也就是说，scan其实是有 n （n = comm.Get_size()）次 AllReduce 操作，每次 AllReduce 对应的是前 i 个进程。
 
@@ -212,19 +212,19 @@ else:
      data = comm.scan(CalData, op)
      ```
 
-其中CalData是待计算数据，op是对应操作，比如 MPI.SUM
+     ​	其中CalData是待计算数据，op是对应操作，比如 MPI.SUM
 
   - barrier
 
-    barrier 是一种全局同步，当一个进程调用 barrier 的时候,它会被阻塞。当所有进程都调用了 barrier 之后, barrier 会同时解除所有进程的阻塞。相当于是运行比较快的进程等待其他进程运行到相同的执行代码处，再一起运行。这就是全部进程进行同步
+    ​	barrier 是一种全局同步，当一个进程调用 barrier 的时候,它会被阻塞。当所有进程都调用了 barrier 之后, barrier 会同时解除所有进程的阻塞。相当于是运行比较快的进程等待其他进程运行到相同的执行代码处，再一起运行。这就是全部进程进行同步
 
-       接口 :
+       	接口 :
 
     ```python
     comm.barrier()
     ```
 
-       无返回值
+       	无返回值
 
     ​
 
@@ -244,21 +244,21 @@ else:
     new_comm = comm.Create(group)  
     ```
 
-       唯一参数group是一个对应进程rank的数组，返回值new_comm是一个新的通信子，这个函数会在group数组的进程间创建一个新的通信组，这个通信组即用 new_comm通信子来标识
+       	唯一参数group是一个对应进程rank的数组，返回值new_comm是一个新的通信子，这个函数会在group数组的进程间创建一个新的通信组，这个通信组即用 new_comm通信子来标识
 
-       实际上，在comm这个通信子里的所有进程,必须都调用 Create() 这个方法,MPI 才会生成并返回新的通信子。在 group 列表中的进程返回新的通信子，否则返回NULL
+       	实际上，在comm这个通信子里的所有进程,必须都调用 Create() 这个方法,MPI 才会生成并返回新的通信子。在 group 列表中的进程返回新的通信子，否则返回NULL
 
   - Group的运算
 
-    Get_group()函数返回的是一个 group 类，本质是一个包含进程 ran k的列表，我们可以进行一些增删等操作，来得到我们想要的新的 group 列表
+    ​	Get_group()函数返回的是一个 group 类，本质是一个包含进程 ran k的列表，我们可以进行一些增删等操作，来得到我们想要的新的 group 列表
 
     - group.Incl([ ])
 
-      传入的唯一参数是一个列表，列表中包含的是需要的 group 列表数据中对应的下表，返回参数列表对应下标的数据。
+      ​	传入的唯一参数是一个列表，列表中包含的是需要的 group 列表数据中对应的下表，返回参数列表对应下标的数据。
 
     - group.Excl([])
 
-      同上，Excl 对应的是删除操作，列表中包含的是需要删除的 group 列表数据中对应的下表，返回删除参数列表对应下标的数据后的列表。
+      ​	同上，Excl 对应的是删除操作，列表中包含的是需要删除的 group 列表数据中对应的下表，返回删除参数列表对应下标的数据后的列表。
 
     - Intersection
 
@@ -266,7 +266,7 @@ else:
       MPI.Group.Intersection(group1,group2
       ```
 
-      交集，返回 group1 和 group2 都拥有的数据
+      ​	交集，返回 group1 和 group2 都拥有的数据
 
     - Union
 
@@ -274,7 +274,7 @@ else:
       MPI.Group.Union(group1,group2)
       ```
 
-      同上，返回2个 group 的并集
+      ​	同上，返回2个 group 的并集
 
     - difference
 
@@ -282,19 +282,19 @@ else:
       MPI.Group.Difference(group1,group2)
       ```
 
-      同上，返回 group1 - group2 形成的差集
+      ​	同上，返回 group1 - group2 形成的差集
 
     - Split
 
-      有时候,我们需要把进程分成若干组,它们各自形成新的通信组。如果还是用Create()去实现的话,未免有点麻烦。
+      ​	有时候,我们需要把进程分成若干组,它们各自形成新的通信组。如果还是用Create()去实现的话,未免有点麻烦。
 
-       MPI提供了Spilt函数，每个进程都要向 Split 提供一个color, color 是一个 int。所有相同 color     的进程会形成新的通信组。
+       	MPI提供了Spilt函数，每个进程都要向 Split 提供一个color, color 是一个 int。所有相同 color     的进程会形成新的通信组。
 
       ```python
       new_comm = comm.Split(color)
       ```
 
-      color就是每个进程传入的int值，返回每个进程拥有的新的通信子
+      ​	color就是每个进程传入的int值，返回每个进程拥有的新的通信子
 
       ​
 
