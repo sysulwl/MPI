@@ -45,11 +45,11 @@ else:
 
     在通信组中，通过通信子获取rank和size:
 
-    ```
+    ​```
      comm = MPI.COMM_WORLD  
      comm_rank = comm.Get_rank()         
      comm_size = comm.Get_size()  
-    ```
+    ​```
 
 2. 点对点通信
 
@@ -73,7 +73,9 @@ else:
 
     - 同步模式	
 
-      在同步模式中，只有函数真正的结束发送/接收任务之后才会返回![avatar](source/MPI_SYN_SEND.jpg)
+      在同步模式中，只有函数真正的结束发送/接收任务之后才会返回
+
+      ![avatar](source/MPI_SYN_SEND.jpg)
 
     - 阻塞有缓冲版本
 
@@ -161,9 +163,9 @@ else:
 
        mpi4py 实现的 gather 函数如下：
 
-        ```
+        ​```
     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
-        ```
+        ​```
 
        sendbuf 是要发送的数据， rank_of_root_process 代表要接收数据进程。
 
@@ -185,9 +187,11 @@ else:
        gather中只有根进程会得到收集到的信息, 组成一个列表，而allgather则是所有进程都会得到这个列表，就相当于收集后再广播一次.
 
        ```
+
+       ```
     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
        ```
-
+    
     ​
 
   - AllReduce
@@ -206,10 +210,10 @@ else:
 
      也就是说，scan其实是有 n （n = comm.Get_size()）次 AllReduce 操作，每次 AllReduce 对应的是前 i 个进程。
 
-    ```
+    ​```
     data = comm.scan(CalData, op)
-    ```
-
+    ​```
+    
     其中CalData是待计算数据，op是对应操作，比如 MPI.SUM
 
   - barrier
