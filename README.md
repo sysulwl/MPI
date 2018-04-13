@@ -42,14 +42,14 @@ else:
 
     COMM_NULL : 则什么进程都没有包含.
 
-
     在通信组中，通过通信子获取rank和size:
 
-    ​```
-     comm = MPI.COMM_WORLD  
-     comm_rank = comm.Get_rank()         
-     comm_size = comm.Get_size()  
-    ​```
+
+```python
+ comm = MPI.COMM_WORLD  
+ comm_rank = comm.Get_rank()         
+ comm_size = comm.Get_size()  
+```
 
 2. 点对点通信
 
@@ -57,17 +57,19 @@ else:
 
        Python的 mpi4py库 通过下面两个函数提供了点对点通讯功能:     
 
-      ```
+      ```python
       Comm.Send(data, process_destination)
       ```
 
       通过它在交流组中的排名来区分发送给不同进程的数据
 
-      ```
+      ```python
       Comm.Recv(process_source)
       ```
 
-        接收来自源进程的数据，也是通过在通信组中的rank来区分的
+    ```python
+    接收来自源进程的数据，也是通过在通信组中的rank来区分的
+    ```
 
        注意： comm.send() 和 comm.recv() 函数都是阻塞的函数。他们会一直阻塞调用者，直到数据使用完成。
 
@@ -81,7 +83,7 @@ else:
 
       通过返回值接收数据会多了一次数据拷贝的操作，效率较低。MPI中提供了带buffer参数的点对点通信函数:
 
-      ```
+      ```python
       comm.Send([data, type], dest)  
       comm.Recv([buf,type], source)  
       ```
@@ -94,7 +96,7 @@ else:
 
       点对点通信里的recv函数是一个阻塞函数,也就是接收方要等发送方发送了信息,函数才能返回。 那么对应的,非阻塞型函数就是,不管发送方是否发送了信息,函数都马上返回,返回一个request对象。我们可以通过request对象来测试发送方是否发送了信息。
 
-      ```
+      ```python
       comm.Isend([data, MPI.INT], dest)    
       comm.Irecv([data, MPI.INT], source)  
       ```
@@ -109,7 +111,7 @@ else:
 
       阻塞版本的probe必须在收到消息后才返回,返回一个true.而非阻塞版本的iprobe则是马上返回一个true或者false,true表示有消息,false则是没有消息.
 
-      ```
+      ```python
       comm.iprobe(source, tag, status)
       ```
 
@@ -134,7 +136,7 @@ else:
 
     ​		Python的 mpi4py 模块通过以下的方式提供广播的功能：
 
-    ```
+    ```python
     buf = comm.bcast(data_to_share, rank_of_root_process)
     ```
 
@@ -150,7 +152,7 @@ else:
 
        mpi4py 中的函数原型如下：
 
-       ```
+       ```python
     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
        ```
 
@@ -163,7 +165,9 @@ else:
 
        mpi4py 实现的 gather 函数如下：
 
-        recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
+    ```python
+    recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
+    ```
 
        sendbuf 是要发送的数据， rank_of_root_process 代表要接收数据进程。
 
@@ -184,7 +188,7 @@ else:
 
        gather中只有根进程会得到收集到的信息, 组成一个列表，而allgather则是所有进程都会得到这个列表，就相当于收集后再广播一次.
 
-     ```
+     ```python
      recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
      ```
 
@@ -193,7 +197,7 @@ else:
 
     同上， AllReduce = reduce + bcast, 将根进程得到的最终结果 广播 给每一个进程
 
-       ```
+       ```python
     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
        ```
 
@@ -205,7 +209,7 @@ else:
 
      也就是说，scan其实是有 n （n = comm.Get_size()）次 AllReduce 操作，每次 AllReduce 对应的是前 i 个进程。
 
-     ```
+     ```python
      data = comm.scan(CalData, op)
      ```
 
@@ -217,7 +221,7 @@ else:
 
        接口 :
 
-    ```
+    ```python
     comm.barrier()
     ```
 
@@ -235,7 +239,7 @@ else:
 
   - 通信子的Create(group):
 
-    ```
+    ```python
     comm = MPI.COMM_WORLD  
     group = comm.Get_group()  
     new_comm = comm.Create(group)  
@@ -259,7 +263,7 @@ else:
 
     - Intersection
 
-      ```
+      ```python
       MPI.Group.Intersection(group1,group2
       ```
 
@@ -267,7 +271,7 @@ else:
 
     - Union
 
-      ```
+      ```python
       MPI.Group.Union(group1,group2)
       ```
 
@@ -275,7 +279,7 @@ else:
 
     - difference
 
-      ```
+      ```python
       MPI.Group.Difference(group1,group2)
       ```
 
@@ -287,7 +291,7 @@ else:
 
        MPI提供了Spilt函数，每个进程都要向 Split 提供一个color, color 是一个 int。所有相同 color     的进程会形成新的通信组。
 
-      ```
+      ```python
       new_comm = comm.Split(color)
       ```
 
