@@ -145,9 +145,9 @@ else:
 
     ![avatar](source/MPI_SCATTER.JPG)
 
-      和广播类似，散播向每个监听的进程发送数据，不过每个数据并不是都相同的。常用的场景，是将一个列表里面的数据分别发送给若干个进程。
+      	和广播类似，散播向每个监听的进程发送数据，不过每个数据并不是都相同的。常用的场景，是将一个列表里面的数据分别发送给若干个进程。
 
-      comm.scatter 函数接收一个array，根据进程的rank将其中的元素发送给不同的进程。比如第一个元素将发送给进程0，第二个元素将发送给进程1，等等。
+      	comm.scatter 函数接收一个array，根据进程的rank将其中的元素发送给不同的进程。比如第一个元素将发送给进程0，第二个元素将发送给进程1，等等。
 
       mpi4py 中的函数原型如下：
 
@@ -155,14 +155,14 @@ else:
     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
        ```
 
-       注意， comm.scatter 有一个限制，发送数据的列表中元素的个数必须和接收的进程数相等，否则会报错。
+       	注意， comm.scatter 有一个限制，发送数据的列表中元素的个数必须和接收的进程数相等，否则会报错。
 
   - gather聚集
 
     ![avatar](source/MPI_GATHER.JPG)
-       gather 函数基本上是 scatter 的反操作，即收集所有进程发送向root进程的数据。 
+     	gather 函数基本上是 scatter 的反操作，即收集所有进程发送向root进程的数据。 
 
-       mpi4py 实现的 gather 函数如下：
+       	mpi4py 实现的 gather 函数如下：
 
     ```python
     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
