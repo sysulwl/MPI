@@ -37,7 +37,6 @@ else:
 
     得到基于全局的通信子，包含了执行该程序的所有进程。类似的还有两个系统默认创建的通信子:
 
-
     COMM_SELF : 仅仅包含了当前进程
 
     COMM_NULL : 则什么进程都没有包含.
@@ -59,7 +58,7 @@ else:
        ​	Python的 mpi4py库 通过下面两个函数提供了点对点通讯功能:     
 
        ```python
-         Comm.Send(data, process_destination)
+       Comm.Send(data, process_destination)
        ```
 
          	通过它在交流组中的排名来区分发送给不同进程的数据
@@ -76,24 +75,24 @@ else:
 
     - 同步模式	
 
-       在同步模式中，只有函数真正的结束发送/接收任务之后才会返回
+       	在同步模式中，只有函数真正的结束发送/接收任务之后才会返回
 
-       ![avatar](source/MPI_SYN_SEND.jpg)
+      ​	 ![avatar](source/MPI_SYN_SEND.jpg)
 
       ​
 
     - 阻塞有缓冲版本
 
-      通过返回值接收数据会多了一次数据拷贝的操作，效率较低。MPI中提供了带buffer参数的点对点通信函数:
+      ​	通过返回值接收数据会多了一次数据拷贝的操作，效率较低。MPI中提供了带buffer参数的点对点通信函数:
 
       ```python
         comm.Send([data, type], dest)  
         comm.Recv([buf,type], source) 
       ```
 
-       这里data是一个 numpy.array，包含了需要传输的数据，type则是这个数据的类型，典型值有MPI.INT，dest分别是源进程rank和目的进程rank。
+       	这里data是一个 numpy.array，包含了需要传输的数据，type则是这个数据的类型，典型值有MPI.INT，dest分别是源进程rank和目的进程rank。
 
-        ![avatar](source/MPI_BUFFER_SEND.jpg)
+       	 ![avatar](source/MPI_BUFFER_SEND.jpg)
 
     - 非阻塞有缓冲版本
 
