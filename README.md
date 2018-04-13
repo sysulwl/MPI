@@ -123,46 +123,48 @@ else:
 
    ​	在 mpi4py 模块中，只提供了阻塞版本的集体通信接口（阻塞调用者，直到缓存中的数据全部安全发送。）
 
-  - bcast 广播
+   ​
 
-    ![avatar](source/MPI_BCAST.JPG)
+   - bcast 广播
 
-    ​		Python的 mpi4py 模块通过以下的方式提供广播的功能：
+     ​	![avatar](source/MPI_BCAST.JPG)
 
-    ```python
-    buf = comm.bcast(data_to_share, rank_of_root_process)
-    ```
+     ​	   Python的 mpi4py 模块通过以下的方式提供广播的功能：
 
-    ​		这个函数将data_to_share发送给属于 comm 通讯组其他的进程，每个进程必须通过相同的 root 和 comm 来调用它。comm通信组内的每个进程调用完该函数后都会接受到 data_to_share （包括root进程）。参数 data_to_share 为 None 表示接受广播信息。
+     ```python
+     buf = comm.bcast(data_to_share, rank_of_root_process)
+     ```
 
-  - scatter 散播
+     ​		这个函数将data_to_share发送给属于 comm 通讯组其他的进程，每个进程必须通过相同的 root 和 comm 来调用它。comm通信组内的每个进程调用完该函数后都会接受到 data_to_share （包括root进程）。参数 data_to_share 为 None 表示接受广播信息。
 
-    ![avatar](source/MPI_SCATTER.JPG)
+   - scatter 散播
 
-    ​	和广播类似，散播向每个监听的进程发送数据，不过每个数据并不是都相同的。常用的场景，是将一个列表里面的数据分别发送给若干个进程。
+     ​	
 
-		comm.scatter 函数接收一个array，根据进程的rank将其中的元素发送给不同的进程。比如第一个元素将发送给进程0，第二个元素将发送给进程1，等等。
+     ![avatar](source/MPI_SCATTER.JPG)
 
-		mpi4py 中的函数原型如下：
+     ​	和广播类似，散播向每个监听的进程发送数据，不过每个数据并不是都相同的。常用的场景，是将一个列表里面的数据分别发送给若干个进程。comm.scatter 函数接收一个array，根据进程的rank将其中的元素发送给不同的进程。比如第一个元素将发送给进程0，第二个元素将发送给进程1，等等。	
 
-       ```python
-    recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
-       ```
+     ​	mpi4py 中的函数原型如下：
 
-       	注意， comm.scatter 有一个限制，发送数据的列表中元素的个数必须和接收的进程数相等，否则会报错。
+     ```python
+     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
+     ```
 
-  - gather聚集
+     ​	注意， comm.scatter 有一个限制，发送数据的列表中元素的个数必须和接收的进程数相等，否则会报错。
 
-    ![avatar](source/MPI_GATHER.JPG)
-     	gather 函数基本上是 scatter 的反操作，即收集所有进程发送向root进程的数据。 
+   - gather聚集
 
-       	mpi4py 实现的 gather 函数如下：
+     ​	![avatar](source/MPI_GATHER.JPG)
+      	gather 函数基本上是 scatter 的反操作，即收集所有进程发送向root进程的数据。 
 
-    ```python
-    recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
-    ```
+        	mpi4py 实现的 gather 函数如下：
 
-       sendbuf 是要发送的数据， rank_of_root_process 代表要接收数据进程。
+     ```python
+     recvbuf  = comm.scatter(sendbuf, rank_of_root_process)
+     ```
+
+        	sendbuf 是要发送的数据， rank_of_root_process 代表要接收数据进程。
 
   - reduce规约
 
