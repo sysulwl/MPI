@@ -62,7 +62,7 @@ else:
       Comm.Send(data, process_destination)
       ```
 
-      通过它在交流组中的排名来区分发送给不同进程的数据
+      	通过它在交流组中的排名来区分发送给不同进程的数据
 
       ```python
       Comm.Recv(process_source)
