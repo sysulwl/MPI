@@ -221,7 +221,7 @@ else:
 
      无返回值
 
-​
+
 
 4. 通信组操作
 
@@ -239,13 +239,13 @@ else:
     new_comm = comm.Create(group)  
     ```
 
-       	唯一参数group是一个对应进程rank的数组，返回值new_comm是一个新的通信子，这个函数会在group数组的进程间创建一个新的通信组，这个通信组即用 new_comm通信子来标识
+    唯一参数group是一个对应进程rank的数组，返回值new_comm是一个新的通信子，这个函数会在group数组的进程间创建一个新的通信组，这个通信组即用 new_comm通信子来标识
 
-       	实际上，在comm这个通信子里的所有进程,必须都调用 Create() 这个方法,MPI 才会生成并返回新的通信子。在 group 列表中的进程返回新的通信子，否则返回NULL
+    实际上，在comm这个通信子里的所有进程,必须都调用 Create() 这个方法,MPI 才会生成并返回新的通信子。在 group 列表中的进程返回新的通信子，否则返回NULL
 
   - Group的运算
 
-    ​	Get_group()函数返回的是一个 group 类，本质是一个包含进程 ran k的列表，我们可以进行一些增删等操作，来得到我们想要的新的 group 列表
+    Get_group()函数返回的是一个 group 类，本质是一个包含进程 ran k的列表，我们可以进行一些增删等操作，来得到我们想要的新的 group 列表
 
     - group.Incl([ ])
 
