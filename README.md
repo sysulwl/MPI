@@ -67,9 +67,8 @@ else:
       Comm.Recv(process_source)
       ```
 
-    ```python
     接收来自源进程的数据，也是通过在通信组中的rank来区分的
-    ```
+
 
        注意： comm.send() 和 comm.recv() 函数都是阻塞的函数。他们会一直阻塞调用者，直到数据使用完成。
 
